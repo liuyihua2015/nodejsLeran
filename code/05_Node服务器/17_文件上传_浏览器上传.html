@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file">
+    <button>上传</button>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        //文件上传逻辑
+        var btn = document.querySelector('button');
+        var input = document.querySelector('input');
+        btn.onclick = function(){
+            //创建一个表单对象
+            var form = new FormData();
+            //将文件添加到表单中
+            form.append('file',input.files[0]);
+            
+            //发送请求
+            axios.post('http://localhost:8000/upload',form).then(res=>{
+                console.log(res);
+            })
+        }
+
+    </script>
+</body>
+</html>
