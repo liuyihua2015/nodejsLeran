@@ -2,6 +2,7 @@ const momentService = require("../service/moment.service");
 
 class momentController {
 
+    //发表动态
     async create(ctx, next) {
         //1.获取数据(user_id, content)
         const userId = ctx.user.id;
@@ -11,6 +12,24 @@ class momentController {
         const result = await momentService.create(userId, content);
 
         //3.返回数据
+
+        ctx.body = {
+            code: 0,
+            data: result
+        }
+    }
+    //获取动态列表
+    async list(ctx, next) {
+        //1.获取数据(offset/size)
+        const { offset, size} = ctx.query;
+        console.log(offset, size);
+        // offset/size 没值 设置默认值
+        
+
+        //2.查询列表
+        const result = await momentService.getMomentList(offset, size);
+
+        //3.返回结果
 
         ctx.body = {
             code: 0,
