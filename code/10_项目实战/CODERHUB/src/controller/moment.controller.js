@@ -37,13 +37,20 @@ class momentController {
         }
     }
 
-    // async detail(ctx, next) {
-    //     ctx.body = '获取动态详情成功'
-    // }
+    //获取动态详情
+    async detail(ctx, next) {
+        //1.获取数据(momentId)
+        const { momentId } = ctx.params;
 
-    // async list(ctx, next) {
-    //     ctx.body = '获取动态列表成功'
-    // }
+        //2,根据id查询数据
+        const result = await momentService.getMomentById(momentId);
+
+        //3.返回结果
+        ctx.body = {
+            code:0,
+            data: result
+        }
+    }
 
     // async update(ctx, next) {
     //     ctx.body = '更新动态成功'
