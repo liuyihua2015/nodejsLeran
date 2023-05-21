@@ -15,6 +15,7 @@ class momentController {
 
         ctx.body = {
             code: 0,
+            message: '发表动态成功',
             data: result
         }
     }
@@ -33,6 +34,7 @@ class momentController {
 
         ctx.body = {
             code: 0,
+            message: '获取动态列表成功',
             data: result
         }
     }
@@ -48,13 +50,29 @@ class momentController {
         //3.返回结果
         ctx.body = {
             code:0,
+            message: '获取动态详情成功',
             data: result
         }
     }
 
-    // async update(ctx, next) {
-    //     ctx.body = '更新动态成功'
-    // }
+    //更新动态
+    async update(ctx, next) {
+        console.log('更新动态');
+        //1.获取需要修改的动态id
+        const { momentId } = ctx.params;
+        //2.获取需要修改的内容
+        const { content } = ctx.request.body;
+
+        //3.修改内容
+        const result = await momentService.update(content, momentId);
+
+        //4.返回结果
+        ctx.body = {
+            code: 0,
+            message: '更新动态成功',
+            data: result
+        }
+    }
 
     // async remove(ctx, next) {
     //     ctx.body = '删除动态成功'
