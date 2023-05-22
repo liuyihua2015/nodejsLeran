@@ -35,14 +35,14 @@ class commentController {
         const { commentId } = ctx.params;
 
         console.log(momentId, content, id, commentId);
-        
+
         //没有参数返回错误信息
         if (!momentId || !content || !commentId) {
             return ctx.app.emit('error', PARAMETER_IS_INCOMPLETE, ctx);
         }
         //将评论插入到数据库
         const result = await commentService.reply(momentId, content, id, commentId);
-
+       
         //返回数据
         ctx.body = {
             code: 0,

@@ -1,3 +1,4 @@
+const { RESOURCE_DOES_NOT_EXIST } = require("../config/error");
 const momentService = require("../service/moment.service");
 
 class momentController {
@@ -22,10 +23,10 @@ class momentController {
     //获取动态列表
     async list(ctx, next) {
         //1.获取数据(offset/size)
-        const { offset, size} = ctx.query;
+        const { offset, size } = ctx.query;
         console.log(offset, size);
         // offset/size 没值 设置默认值
-        
+
 
         //2.查询列表
         const result = await momentService.getMomentList(offset, size);
@@ -46,6 +47,11 @@ class momentController {
 
         //2,根据id查询数据
         const result = await momentService.getMomentById(momentId);
+
+        //资源不存在
+        if (!result) {
+            return ctx.app.emit('error', RESOURCE_DOES_NOT_EXIST, ctx)
+        }
 
         //3.返回结果
         ctx.body = {

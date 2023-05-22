@@ -29,9 +29,13 @@ app.on('error', (err, ctx) => {
             code = -1006;
             message = '您不具备操作的权限~';
             break;
-            case errorUtil.PARAMETER_IS_INCOMPLETE:
+        case errorUtil.PARAMETER_IS_INCOMPLETE:
             code = -1007;
             message = '参数不完整~';
+            break;
+        case errorUtil.RESOURCE_DOES_NOT_EXIST:
+            code = -1008;
+            message = '资源不存在~';
             break;
         default:
             code = -999;

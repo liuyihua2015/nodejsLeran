@@ -11,7 +11,8 @@ class MomentService {
     //获取动态列表
     async getMomentList(offset = 0, size = 10) {
         const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,
-        JSON_OBJECT('id', u.id, 'name', u.name) author
+        JSON_OBJECT('id', u.id, 'name', u.name) user,
+        (SELECT COUNT(*) FROM comment WHERE moment_id = m.id) commentCount
         FROM moment m
         LEFT JOIN user u ON m.user_id = u.id
         LIMIT ?, ?;`;
@@ -23,8 +24,13 @@ class MomentService {
 
     //获取动态详情
     async getMomentById(momentId) {
-        const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,
-        JSON_OBJECT('id', u.id, 'name', u.name) author
+        const statement = `SELECT
+        m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,
+        JSON_OBJECT('id', u.id, 'name', u.name) user,
+        (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', c.id, 'content', c.content, 'createTime', c.createAt, 'commentId', c.comment_id ,'user', JSON_OBJECT('id', u.id, 'name', u.name)))
+        FROM comment c
+        LEFT JOIN user u ON c.user_id = u.id
+        WHERE c.moment_id = m.id) commentList
         FROM moment m
         LEFT JOIN user u ON m.user_id = u.id
         WHERE m.id = ?;`;

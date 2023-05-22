@@ -6,6 +6,8 @@ const UNAUTHORIZED = 'unauthorized';
 const NO_PERMISSION = 'no-permission';
 const UNAUTHENTICATED = 'unauthenticated';
 const PARAMETER_IS_INCOMPLETE = 'parameter_is_incomplete';
+//资源不存在
+const RESOURCE_DOES_NOT_EXIST = 'resource_does_not_exist';
 
 module.exports = {
     NAME_OR_PASSWORD_IS_REQUIRED,
@@ -15,5 +17,6 @@ module.exports = {
     UNAUTHORIZED,
     NO_PERMISSION,
     UNAUTHENTICATED,
-    PARAMETER_IS_INCOMPLETE
+    PARAMETER_IS_INCOMPLETE,
+    RESOURCE_DOES_NOT_EXIST
 }
