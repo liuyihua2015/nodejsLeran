@@ -73,10 +73,19 @@ class momentController {
             data: result
         }
     }
-
-    // async remove(ctx, next) {
-    //     ctx.body = '删除动态成功'
-    // }
+    //删除动态
+    async remove(ctx, next) {
+        //1.获取动态id
+        const { momentId } = ctx.params;
+        //2.删除动态
+        const result = await momentService.remove(momentId);
+        //3.返回结果
+        ctx.body = {
+            code: 0,
+            message: '删除动态成功',
+            data: result
+        }
+    }
 
     // async addLabels(ctx, next) {
     //     ctx.body = '给动态添加标签成功'

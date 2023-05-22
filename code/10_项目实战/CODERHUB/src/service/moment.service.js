@@ -39,6 +39,12 @@ class MomentService {
         const [result] = await database.execute(statement, [content, momentId]);
         return result;
     }
+    //删除动态
+    async remove(momentId) {
+        const statement = `DELETE FROM moment WHERE id = ?;`;
+        const [result] = await database.execute(statement, [momentId]);
+        return result;
+    }
 
 }
 
