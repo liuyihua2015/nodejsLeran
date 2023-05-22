@@ -5,6 +5,7 @@ const PASSWORD_IS_INCORRECT = 'password_is_incorrect';
 const UNAUTHORIZED = 'unauthorized';
 const NO_PERMISSION = 'no-permission';
 const UNAUTHENTICATED = 'unauthenticated';
+const PARAMETER_IS_INCOMPLETE = 'parameter_is_incomplete';
 
 module.exports = {
     NAME_OR_PASSWORD_IS_REQUIRED,
@@ -13,5 +14,6 @@ module.exports = {
     PASSWORD_IS_INCORRECT,
     UNAUTHORIZED,
     NO_PERMISSION,
-    UNAUTHENTICATED
+    UNAUTHENTICATED,
+    PARAMETER_IS_INCOMPLETE
 }

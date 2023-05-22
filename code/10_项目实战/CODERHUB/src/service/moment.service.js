@@ -1,4 +1,3 @@
-const { string } = require('sharp/lib/is');
 const database = require('../app/database');
 
 class MomentService {
