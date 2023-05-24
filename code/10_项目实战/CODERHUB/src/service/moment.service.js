@@ -7,17 +7,18 @@ class MomentService {
         const [result] = await database.execute(statement, [content, userId]);
         return result;
     }
-    
+
     //获取动态列表
     async getMomentList(offset = 0, size = 10) {
         const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,
         JSON_OBJECT('id', u.id, 'name', u.name) user,
-        (SELECT COUNT(*) FROM comment WHERE moment_id = m.id) commentCount
+        (SELECT COUNT(*) FROM comment WHERE moment_id = m.id) commentCount,
+        (SELECT COUNT(*) FROM moment_label ml WHERE ml.moment_id = m.id) labelCount
         FROM moment m
         LEFT JOIN user u ON m.user_id = u.id
         LIMIT ?, ?;`;
         console.log(offset, size);
-        const [result] = await database.execute(statement, [String(offset) ,String(size)]);
+        const [result] = await database.execute(statement, [String(offset), String(size)]);
         console.log(result);
         return result;
     }
@@ -30,7 +31,14 @@ class MomentService {
         (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', c.id, 'content', c.content, 'createTime', c.createAt, 'commentId', c.comment_id ,'user', JSON_OBJECT('id', u.id, 'name', u.name)))
         FROM comment c
         LEFT JOIN user u ON c.user_id = u.id
-        WHERE c.moment_id = m.id) commentList
+        WHERE c.moment_id = m.id) commentList,
+        (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', l.id, 'name', l.name))
+        FROM (
+            SELECT ml.label_id
+            FROM moment_label ml
+            WHERE ml.moment_id = m.id
+        ) ml
+        LEFT JOIN label l ON ml.label_id = l.id) labelList
         FROM moment m
         LEFT JOIN user u ON m.user_id = u.id
         WHERE m.id = ?;`;
