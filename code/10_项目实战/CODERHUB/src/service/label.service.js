@@ -7,6 +7,13 @@ class labelService {
         const [result] = await database.execute(statement, [name]);
         return result;
     }
+
+    async getLabelByName(name) {
+        const statement = `SELECT * FROM label WHERE name = ?;`;
+        const [result] = await database.execute(statement, [name]);
+        return result;
+    }
+
 }
 
 module.exports = new labelService();

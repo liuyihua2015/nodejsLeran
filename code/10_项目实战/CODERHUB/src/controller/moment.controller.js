@@ -1,4 +1,3 @@
-const { RESOURCE_DOES_NOT_EXIST } = require("../config/error");
 const momentService = require("../service/moment.service");
 
 class momentController {
@@ -50,7 +49,7 @@ class momentController {
 
         //资源不存在
         if (!result) {
-            return ctx.app.emit('error', RESOURCE_DOES_NOT_EXIST, ctx)
+            return ctx.app.emit('error', PARAMETER_IS_INCOMPLETE, ctx)
         }
 
         //3.返回结果
@@ -93,13 +92,35 @@ class momentController {
         }
     }
 
-    // async addLabels(ctx, next) {
-    //     ctx.body = '给动态添加标签成功'
-    // }
+    async addLabels(ctx, next) {
+        console.log('添加标签');
+        //1.获取标签和动态id
+        const { labels } = ctx.request.body;
+        const { momentId } = ctx.params;
+        
+        console.log(labels);
+        console.log(momentId);
 
-    // async fileInfo(ctx, next) {
-    //     ctx.body = '获取动态配图成功'
-    // }
+        // //labels参数判断
+        // if (labels === undefined || labels.length === 0) {
+        //     return ctx.app.emit('error', RESOURCE_DOES_NOT_EXIST, ctx);
+        // }
+
+        //2.添加所有的标签
+        // for (let label of labels) {
+        //     //2.1判断标签是否已经和动态有关系
+        //     const isExist = await momentService.hasLabel(momentId, label.id);
+        //     console.log(isExist);
+        //     if (!isExist) {
+        //         await momentService.addLabel(momentId, label.id);
+        //     }
+        // }
+        //3.返回结果
+        ctx.body = {
+            code: 0,
+            message: '给动态添加标签成功'
+        }
+    }
 
 }
 

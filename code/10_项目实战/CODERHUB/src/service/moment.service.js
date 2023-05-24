@@ -51,6 +51,21 @@ class MomentService {
         return result;
     }
 
+    //是否存在label
+    async hasLabel(momentId, labelId) {
+        const statement = `SELECT * FROM moment_label WHERE moment_id = ? AND label_id = ?;`;
+        const [result] = await database.execute(statement, [momentId, labelId]);
+        // return result[0] ? true : false;
+        return !!result.length;
+    }
+
+    //添加标签
+    async addLabel(momentId, labelId) {
+        const statement = `INSERT INTO moment_label (moment_id, label_id) VALUES (?, ?);`;
+        const [result] = await database.execute(statement, [momentId, labelId]);
+        return result;
+    }
+
 }
 
 module.exports = new MomentService();
