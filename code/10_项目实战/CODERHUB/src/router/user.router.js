@@ -8,5 +8,7 @@ const userRouter = new koaRouter({ prefix: '/users' });
 //2.1. 用户注册接口
 userRouter.post('/',verifyUser,handlePassword,userController.create);
 
+//查看用户头像
+userRouter.get('/avatar/:userId',userController.avatarInfo);
 
 module.exports = userRouter;

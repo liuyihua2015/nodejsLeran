@@ -1,5 +1,6 @@
+const fileService = require('../service/file.service');
 const service = require('../service/user.service');
-
+const fs = require('fs');
 class userController {
     async create(ctx, next) {
         //1.获取请求参数
@@ -16,6 +17,24 @@ class userController {
             message: '注册成功~',
             data: result
         }
+    }
+
+    //查询用户头像
+    async avatarInfo(ctx, next) {
+    
+        //.1获取用户id
+        const { userId } = ctx.params;
+
+        //2.查询用户头像信息
+        const result = await fileService.getAvatarByUserId(userId);
+
+        console.log(result);
+
+        //3.返回用户头像信息
+        const { filename, mimetype} = result;
+        ctx.type = mimetype;
+        ctx.body = fs.createReadStream(`./uploads/avatar/${filename}`);
+
     }
 
 
